@@ -7,6 +7,8 @@ const Forget = React.lazy(()=>import('./screen/Auth/ForgetPassword'))
 const Reset = React.lazy(()=>import('./screen/Auth/ResetPassword'))
 
 const Home = React.lazy(()=>import('./screen/App/Home'));
+const Profile = React.lazy(()=>import('./screen/App/Profile'));
+const Single = React.lazy(()=>import('./screen/App/Single'));
 
 
 
@@ -20,6 +22,6 @@ export const AuthRoute = [
 
 export const Routes = [
     { path: '/', exact: true, name: 'Twit', component: Home},
-    { path: '/profile', exact: true, name: 'profile', component: Home},
-    { path: '/twits/:id', exact: true, name: 'Twit-single', component: Home},
+    { path: '/profile', exact: true, name: 'profile', component: Profile},
+    { path: '/twits/:id', exact: true, name: 'Twit-single', component: Single},
 ];
