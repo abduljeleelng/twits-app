@@ -132,14 +132,91 @@ export const reset = async (user) =>{
     }catch(e){console.log(e)}
 }
 
-export const signoutA = async (user) =>{
+export const signoutA = async (token) =>{
     try{
         const response = await fetch(`${BASE_URL}/auth/signout`,{
             method:'POST',
-            body:JSON.stringify(user),
+            body:JSON.stringify({}),
             headers:{
                 'Content-Type':'application/json; charset=UTF-8',
-                accept:'application/json'
+                accept:'application/json',
+                Authorization: `Bearer ${token}`
+            },
+        }).catch(err => console.log(err));
+        const data = response.json();
+        return data;
+    }catch(e){console.log(e)}
+}
+
+export const profile = async (token) =>{
+    try{
+        const response = await fetch(`${BASE_URL}/twit/user/profile`,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json; charset=UTF-8',
+                accept:'application/json',
+                Authorization: `Bearer ${token}`
+            },
+        }).catch(err => console.log(err));
+        const data = response.json();
+        return data;
+    }catch(e){console.log(e)}
+}
+
+export const singleTwits = async (token, id) =>{
+    try{
+        const response = await fetch(`${BASE_URL}/twit/${id}`,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json; charset=UTF-8',
+                accept:'application/json',
+                Authorization: `Bearer ${token}`
+            },
+        }).catch(err => console.log(err));
+        const data = response.json();
+        return data;
+    }catch(e){console.log(e)}
+}
+
+export const deleteTwits = async (token, id) =>{
+    try{
+        const response = await fetch(`${BASE_URL}/twit/${id}`,{
+            method:'DELETE',
+            headers:{
+                'Content-Type':'application/json; charset=UTF-8',
+                accept:'application/json',
+                Authorization: `Bearer ${token}`
+            },
+        }).catch(err => console.log(err));
+        const data = response.json();
+        return data;
+    }catch(e){console.log(e)}
+}
+
+export const twits = async (token) =>{
+    try{
+        const response = await fetch(`${BASE_URL}/twit`,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json; charset=UTF-8',
+                accept:'application/json',
+                Authorization: `Bearer ${token}`
+            },
+        }).catch(err => console.log(err));
+        const data = response.json();
+        return data;
+    }catch(e){console.log(e)}
+}
+
+export const createTwits = async (token, twit) =>{
+    try{
+        const response = await fetch(`${BASE_URL}/twit`,{
+            method:'POST',
+            body:JSON.stringify(twit),
+            headers:{
+                'Content-Type':'application/json; charset=UTF-8',
+                accept:'application/json',
+                Authorization: `Bearer ${token}`
             },
         }).catch(err => console.log(err));
         const data = response.json();

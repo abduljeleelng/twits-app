@@ -1,11 +1,12 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import './styles.css'
-import {createTwits, signout, signoutA, twits} from '../api'
+import {createTwits, signout, signoutA, singleTwits} from '../api'
 
-export default function Home() {
+export default function single() {
+    const {id} = useParams;
     const [values, setValues] = React.useState({
         redirect :false,
         Auth:{},
@@ -16,7 +17,7 @@ export default function Home() {
         redirectToPage:false,
     
     })
-    const {redirect,Auth, twit, text,loading, redirectToPage, comment} = values
+    const {redirect,Auth, twit, text,loading, redirectToPage} = values
 
     const handleChange = name => event => {
         setValues({ ...values, error: false, [name]: event.target.value });
@@ -25,7 +26,8 @@ export default function Home() {
     React.useEffect(() => {
         const boots = async () =>{
             const Auth = await JSON.parse(localStorage.getItem('Auth'));
-            const twitData = await twits(Auth.token)
+            const twitData = await singleTwits(Auth.token, id)
+            //console.log(twitData)
             //if(!twitData) return console.log("failed to fetch remote data")
             setValues(v=>({...v, Auth, twit:twitData.data}))
         }
@@ -70,6 +72,11 @@ export default function Home() {
     const handleLikes = async () =>{
 
     }
+
+    const handleComment = async () =>{
+
+    }
+
 
     const HandleSignOut = async ()=>{
         const data = await signoutA(Auth.token);

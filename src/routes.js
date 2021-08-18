@@ -19,5 +19,7 @@ export const AuthRoute = [
 ];
 
 export const Routes = [
-    { path: '/', exact: true, name: 'Layout', component: Home},
+    { path: '/', exact: true, name: 'Twit', component: Home},
+    { path: '/profile', exact: true, name: 'profile', component: Home},
+    { path: '/twits/:id', exact: true, name: 'Twit-single', component: Home},
 ];

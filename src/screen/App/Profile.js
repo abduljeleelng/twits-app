@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import './styles.css'
-import {createTwits, signout, signoutA, twits} from '../api'
+import {createTwits, deleteTwits, profile, signout, signoutA} from '../api'
 
 export default function Home() {
     const [values, setValues] = React.useState({
@@ -11,12 +11,11 @@ export default function Home() {
         Auth:{},
         twit:[],
         text:"",
-        comment:"",
         loading:false,
         redirectToPage:false,
     
     })
-    const {redirect,Auth, twit, text,loading, redirectToPage, comment} = values
+    const {redirect,Auth, twit, text,loading, redirectToPage} = values
 
     const handleChange = name => event => {
         setValues({ ...values, error: false, [name]: event.target.value });
@@ -25,8 +24,10 @@ export default function Home() {
     React.useEffect(() => {
         const boots = async () =>{
             const Auth = await JSON.parse(localStorage.getItem('Auth'));
-            const twitData = await twits(Auth.token)
+            const twitData = await profile(Auth.token)
             //if(!twitData) return console.log("failed to fetch remote data")
+            console.log(twitData)
+            console.log("use effect")
             setValues(v=>({...v, Auth, twit:twitData.data}))
         }
         boots();
@@ -67,9 +68,39 @@ export default function Home() {
         
     }
 
-    const handleLikes = async () =>{
+    const handleDelete= async (id) =>{
+        const data = await deleteTwits(Auth.token, id)
+        if(!data){
+            Swal.fire('Oops...', 'internet server error, Please, check your network connection', 'error')
+            return setValues({...values, loading:false})
+        }
+        if(data.error){
+            Swal.fire('Oops...', data.error, 'error')
+            return setValues({...values, loading:false})
+        }
+        if(data.message){
+            setValues({...values, loading:false, redirectToPage:true})
+            let Toast = Swal.mixin({
+                toast: true,
+                timerProgressBar: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            Toast.fire({
+                animation: true,
+                type: 'success',
+                title: data.message
+            })
+            return  <Redirect to="/profile" />
+        }
 
     }
+
+    const handleComment = async () =>{
+
+    }
+
 
     const HandleSignOut = async ()=>{
         const data = await signoutA(Auth.token);
@@ -207,29 +238,9 @@ export default function Home() {
                         <Link to="/profile" >
                             <h3 className="profile-fullname">{isEmpty(Auth) ? "" : Auth.user.name}</h3>
                         </Link>
-                        
-                        {/* <h2 className="profile-element"> jonvadillo </h2>
-                        <a className="profile-element profile-website" hrerf><i className="octicon octicon-link" />&nbsp;jonvadillo.com</a>
-                        <a className="profile-element profile-website" hrerf><i className="octicon octicon-location" />&nbsp;Vitoria-Gasteiz, Spain</a>
-                        <h2 className="profile-element"><i className="octicon octicon-calendar" />Joined November 2012</h2>
-                        <button className="btn btn-search-bar tweet-to-btn">Tweet to Jon Vadillo</button>
-                        <a className="profile-element profile-website" hrerf><i className="octicon octicon-file-media" />1,142 Photos and videos</a> */}
-                        <div className="pic-grid">
-                        {/* Image grid */}
-                        {/* <div className="row">
-                            <div className="col pic-col"><img src="https://pbs.twimg.com/media/DFCq7iTXkAADXE-.jpg:thumb" height="73px" className /></div>
-                            <div className="col pic-col"><img src="https://pbs.twimg.com/media/DEoQ0vyXoBA1cwQ.png:thumb" height="73px" className /></div>
-                            <div className="col pic-col"><img src="https://pbs.twimg.com/media/DDVbW4RXsAAasuw.jpg:thumb" height="73px" className /></div>
-                        </div> */}
-                        {/* End: row */}
-                        {/* <div className="row">
-                            <div className="col pic-col"><img src="https://pbs.twimg.com/media/DFCq7iTXkAADXE-.jpg:thumb" height="73px" className /></div>
-                            <div className="col pic-col"><img src="https://pbs.twimg.com/media/DEoQ0vyXoBA1cwQ.png:thumb" height="73px" className /></div>
-                            <div className="col pic-col"><img src="https://pbs.twimg.com/media/DDVbW4RXsAAasuw.jpg:thumb" height="73px" className /></div>
-                        </div> */}
-                        {/* End: row */}
-                        </div>
-                        {/* End: image grid */}
+                        <h3 className="profile-element profile-website"><i className="octicon octicon-link" />&nbsp;{isEmpty(Auth) ? "" : Auth.user.email}</h3>
+                        <a className="profile-element profile-website" hrerf="#"><i className="octicon octicon-location" />&nbsp;Lagos, Nigeria</a>
+                        <h2 className="profile-element"><i className="octicon octicon-calendar" />Joined on {isEmpty(Auth) ? "" : Auth.user.created_at}</h2>
                     </div>
                     </div>
                     {/* End; Left column */}
@@ -292,15 +303,16 @@ export default function Home() {
                                                 <a className="tweet-footer-btn">
                                                     <i className="octicon octicon-heart" aria-hidden="true" /><span> {data.likes.length}</span>
                                                 </a>
+                                                <a className="tweet-footer-btn">
+            
+                                                    <i className="octicon octicon-delete" aria-hidden="true" /><span onClick={handleDelete(data.id)}>  delete </span>
+                                                </a>
                                             </div>
                                         </div>
                                     </li>
                                 )
                             })
                         }  
-
-
-                        
                     </ol>
                     {/* End: tweet list */}
                     </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, Redirect} from 'react-router-dom'
 import Swal from 'sweetalert2'
-import {authenticate, forget, signin} from '../api';
+import {forget} from '../api';
 
 import './styles.css'
 
