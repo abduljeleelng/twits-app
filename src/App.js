@@ -1,24 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import { Suspense } from "react";
+import { Route, Router, Switch } from "react-router-dom";
+import { createBrowserHistory } from 'history';
+
+import PrivateRoute from "./screen/api/PrivateRoutes";
+import {AuthRoute, Routes} from './routes';
+
+import Loader from './Loader';
+
+
+const menu = Routes.map((route, index) => {
+  return (route.component) ? (
+      <PrivateRoute
+          key={index}
+          path={route.path}
+          exact={route.exact}
+          name={route.name}
+          render={props => (
+              <route.component {...props} />
+          )} />
+  ) : (null);
+});
+
+const AuthMenu = AuthRoute.map((prop, key)=>{
+  return (
+    <Route
+    path={prop.path}
+    key={key}
+    exact={prop.exact}
+    name={prop.name}
+    component={prop.component}
+    />
+  )
+});
+
+
+const histo = createBrowserHistory();
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={<Loader />} >
+      <Router history={histo}>
+        <Switch>
+          {menu}
+          {AuthMenu}
+        </Switch>
+      </Router>
+    </Suspense>
   );
 }
 
