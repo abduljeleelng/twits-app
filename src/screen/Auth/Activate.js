@@ -22,14 +22,14 @@ export default function Activate() {
             const data = await activate(user);
             if(!data){
                 Swal.fire('Oops...', 'internet server error, Please, check your network connection', 'error')
-                return setValues({...values, loading:false, error:true})
+                return setValues(v=>({...v, loading:false, error:true}))
             }
             if(data.error){
                 Swal.fire('Oops...', data.error, 'error')
-                return setValues({...values, loading:false, error:true})
+                return setValues(v=>({...v, loading:false, error:true}))
             }
             if(data.message){
-                setValues({...values, loading:false, error:false, redirectToPage:true})
+                setValues(v=>({...v, loading:false, error:false, redirectToPage:true}))
                 let Toast = Swal.mixin({
                     toast: true,
                     timerProgressBar: true,
