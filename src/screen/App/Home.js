@@ -16,7 +16,7 @@ export default function Home() {
         redirectToPage:false,
     
     })
-    const {redirect,Auth, twit, text,loading, redirectToPage, comment} = values
+    const {redirect,Auth, twit, text,loading, redirectToPage} = values
 
     const handleChange = name => event => {
         setValues({ ...values, error: false, [name]: event.target.value });
@@ -67,9 +67,9 @@ export default function Home() {
         
     }
 
-    const handleLikes = async () =>{
+    // const handleLikes = async () =>{
 
-    }
+    // }
 
     const HandleSignOut = async ()=>{
         const data = await signoutA(Auth.token);
@@ -141,7 +141,7 @@ export default function Home() {
                 <div className="dropdown navbar-user-dropdown">
                     <button className="btn btn-secondary dropdown-toggle btn-circle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a className="dropdown-item" onClick={HandleSignOut}>Sign out </a>
+                    <span className="dropdown-item" onClick={HandleSignOut}>Sign out </span>
                     </div>
                 </div>
                 {/* END: Navbar User menu */}
@@ -167,25 +167,25 @@ export default function Home() {
                     <div className="col-6">
                         <ul>
                         <li className="profile-stats-item-active">
-                            <a>
+                            <span>
                             <span className="profile-stats-item profile-stats-item-label">Tweets</span>
                             <span className="profile-stats-item profile-stats-item-number">51</span>
-                            </a>
+                            </span>
                         </li>
                         <li>
-                            <a>
+                            <span>
                             <span className="profile-stats-item profile-stats-item-label">Following</span>
                             <span className="profile-stats-item profile-stats-item-number">420</span>
-                            </a>
+                            </span>
                         </li>
                         <li>
-                            <a>
+                            <span>
                             <span className="profile-stats-item profile-stats-item-label">Followers</span>
                             <span className="profile-stats-item profile-stats-item-number">583</span>
-                            </a>
+                            </span>
                         </li>
                         <li>
-                            <a>
+                            <a href>
                             <span className="profile-stats-item profile-stats-item-label">Likes</span>
                             <span className="profile-stats-item profile-stats-item-number">241</span>
                             </a>
@@ -244,7 +244,7 @@ export default function Home() {
                                     </span>      
                                 </div>
                                 <Link to="/">
-                                    <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt />
+                                    <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="Hello wordl" />
                                 </Link>
                                 <div className="tweet-text">
                                     <p className lang="es" data-aria-label-part={0}>
@@ -271,25 +271,25 @@ export default function Home() {
                                                 <span className="username">@{data.user.name}</span>
                                                 <span className="tweet-time">  - {date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()+ '-'+date.getUTCHours()+ '-'+date.getMinutes()+ '-'+date.getUTCSeconds()}</span>
                                             </div>
-                                            <a>
-                                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt />
+                                            <a href>
+                                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="demo" />
                                             </a>
                                             <div className="tweet-text">
                                                 <p className lang="es" data-aria-label-part={0}>
                                                     {
                                                         data.text
                                                     } 
-                                                    <a href className="twitter-hashtag" dir="ltr" />
+                                                    
                                                 </p>
                                             </div>
                                             <div className="tweet-footer">
-                                                <a className="tweet-footer-btn">
+                                                <a className="tweet-footer-btn" href>
                                                     <Link to={`twits/${data.id}`}>
                                                         <i className="octicon octicon-comment" aria-hidden="true" /><span> {data.comment.length}</span>
                                                     </Link>
                                                     
                                                 </a>
-                                                <a className="tweet-footer-btn">
+                                                <a className="tweet-footer-btn" href>
                                                     <i className="octicon octicon-heart" aria-hidden="true" /><span> {data.likes.length}</span>
                                                 </a>
                                             </div>
@@ -316,7 +316,7 @@ export default function Home() {
                         <ol className="tweet-list">
                             <li className="tweet-card">
                                 <div className="tweet-content">
-                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt />
+                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="demo" />
                                 <div className="tweet-header">
                                 <span className="fullname">
                                     <strong>Jon Vadillo</strong>
