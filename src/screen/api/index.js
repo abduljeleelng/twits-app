@@ -174,6 +174,7 @@ export const singleTwits = async (token, id) =>{
             },
         }).catch(err => console.log(err));
         const data = response.json();
+        console.log({data})
         return data;
     }catch(e){console.log(e)}
 }

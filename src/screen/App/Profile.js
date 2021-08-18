@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import './styles.css'
-import {createTwits, deleteTwits, profile, signout, signoutA} from '../api'
+import {createTwits,  profile, signout, signoutA} from '../api'
 
 export default function Home() {
     const [values, setValues] = React.useState({
@@ -68,38 +68,35 @@ export default function Home() {
         
     }
 
-    const handleDelete= async (id) =>{
-        const data = await deleteTwits(Auth.token, id)
-        if(!data){
-            Swal.fire('Oops...', 'internet server error, Please, check your network connection', 'error')
-            return setValues({...values, loading:false})
-        }
-        if(data.error){
-            Swal.fire('Oops...', data.error, 'error')
-            return setValues({...values, loading:false})
-        }
-        if(data.message){
-            setValues({...values, loading:false, redirectToPage:true})
-            let Toast = Swal.mixin({
-                toast: true,
-                timerProgressBar: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            Toast.fire({
-                animation: true,
-                type: 'success',
-                title: data.message
-            })
-            return  <Redirect to="/profile" />
-        }
+    // const handleDelete= async (id) =>{
+    //     const data = await deleteTwits(Auth.token, id)
+    //     if(!data){
+    //         Swal.fire('Oops...', 'internet server error, Please, check your network connection', 'error')
+    //         return setValues({...values, loading:false})
+    //     }
+    //     if(data.error){
+    //         Swal.fire('Oops...', data.error, 'error')
+    //         return setValues({...values, loading:false})
+    //     }
+    //     if(data.message){
+    //         setValues({...values, loading:false, redirectToPage:true})
+    //         let Toast = Swal.mixin({
+    //             toast: true,
+    //             timerProgressBar: true,
+    //             position: 'top-end',
+    //             showConfirmButton: false,
+    //             timer: 3000
+    //         });
+    //         Toast.fire({
+    //             animation: true,
+    //             type: 'success',
+    //             title: data.message
+    //         })
+    //         return  <Redirect to="/profile" />
+    //     }
+    // }
 
-    }
-
-    const handleComment = async () =>{
-
-    }
+  
 
 
     const HandleSignOut = async ()=>{
@@ -172,7 +169,7 @@ export default function Home() {
                 <div className="dropdown navbar-user-dropdown">
                     <button className="btn btn-secondary dropdown-toggle btn-circle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a className="dropdown-item" onClick={HandleSignOut}>Sign out </a>
+                    <a className="dropdown-item" onClick={HandleSignOut} href>Sign out </a>
                     </div>
                 </div>
                 {/* END: Navbar User menu */}
@@ -198,25 +195,25 @@ export default function Home() {
                     <div className="col-6">
                         <ul>
                         <li className="profile-stats-item-active">
-                            <a>
+                            <a href>
                             <span className="profile-stats-item profile-stats-item-label">Tweets</span>
                             <span className="profile-stats-item profile-stats-item-number">51</span>
                             </a>
                         </li>
                         <li>
-                            <a>
+                            <a href>
                             <span className="profile-stats-item profile-stats-item-label">Following</span>
                             <span className="profile-stats-item profile-stats-item-number">420</span>
                             </a>
                         </li>
                         <li>
-                            <a>
+                            <a href>
                             <span className="profile-stats-item profile-stats-item-label">Followers</span>
                             <span className="profile-stats-item profile-stats-item-number">583</span>
                             </a>
                         </li>
                         <li>
-                            <a>
+                            <a href>
                             <span className="profile-stats-item profile-stats-item-label">Likes</span>
                             <span className="profile-stats-item profile-stats-item-number">241</span>
                             </a>
@@ -239,8 +236,8 @@ export default function Home() {
                             <h3 className="profile-fullname">{isEmpty(Auth) ? "" : Auth.user.name}</h3>
                         </Link>
                         <h3 className="profile-element profile-website"><i className="octicon octicon-link" />&nbsp;{isEmpty(Auth) ? "" : Auth.user.email}</h3>
-                        <a className="profile-element profile-website" hrerf="#"><i className="octicon octicon-location" />&nbsp;Lagos, Nigeria</a>
-                        <h2 className="profile-element"><i className="octicon octicon-calendar" />Joined on {isEmpty(Auth) ? "" : Auth.user.created_at}</h2>
+                        <h5 className="profile-element profile-website" ><i className="octicon octicon-location" />&nbsp;Lagos, Nigeria</h5>
+                        <h5 className="profile-element"><i className="octicon octicon-calendar" />Joined on {isEmpty(Auth) ? "" : Auth.user.created_at}</h5>
                     </div>
                     </div>
                     {/* End; Left column */}
@@ -255,7 +252,7 @@ export default function Home() {
                                     </span>      
                                 </div>
                                 <Link to="/">
-                                    <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt />
+                                    <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="demo" />
                                 </Link>
                                 <div className="tweet-text">
                                     <p className lang="es" data-aria-label-part={0}>
@@ -282,30 +279,30 @@ export default function Home() {
                                                 <span className="username">@{data.user.name}</span>
                                                 <span className="tweet-time">  - {date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()+ '-'+date.getUTCHours()+ '-'+date.getMinutes()+ '-'+date.getUTCSeconds()}</span>
                                             </div>
-                                            <a>
-                                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt />
+                                            <a href>
+                                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="demo" />
                                             </a>
                                             <div className="tweet-text">
                                                 <p className lang="es" data-aria-label-part={0}>
                                                     {
                                                         data.text
                                                     } 
-                                                    <a href className="twitter-hashtag" dir="ltr" />
+                                                    
                                                 </p>
                                             </div>
                                             <div className="tweet-footer">
-                                                <a className="tweet-footer-btn">
+                                                <a className="tweet-footer-btn" href>
                                                     <Link to={`twits/${data.id}`}>
                                                         <i className="octicon octicon-comment" aria-hidden="true" /><span> {data.comment.length}</span>
                                                     </Link>
                                                     
                                                 </a>
-                                                <a className="tweet-footer-btn">
-                                                    <i className="octicon octicon-heart" aria-hidden="true" /><span> {data.likes.length}</span>
+                                                <a className="tweet-footer-btn" href>
+                                                    <i className="octicon octicon-heart" aria-hidden="true" /><span> 0</span>
                                                 </a>
-                                                <a className="tweet-footer-btn">
+                                                <a className="tweet-footer-btn" href> 
             
-                                                    <i className="octicon octicon-delete" aria-hidden="true" /><span onClick={handleDelete(data.id)}>  delete </span>
+                                                    <i className="octicon octicon-delete" aria-hidden="true" /><span >  delete </span>
                                                 </a>
                                             </div>
                                         </div>
@@ -328,7 +325,7 @@ export default function Home() {
                         <ol className="tweet-list">
                             <li className="tweet-card">
                                 <div className="tweet-content">
-                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt />
+                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="demo" />
                                 <div className="tweet-header">
                                 <span className="fullname">
                                     <strong>Jon Vadillo</strong>

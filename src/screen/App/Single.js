@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 import './styles.css'
 import {createTwits, signout, signoutA, singleTwits} from '../api'
 
-export default function single() {
+export default function Single() {
     const {id} = useParams;
     const [values, setValues] = React.useState({
         redirect :false,
@@ -27,12 +27,12 @@ export default function single() {
         const boots = async () =>{
             const Auth = await JSON.parse(localStorage.getItem('Auth'));
             const twitData = await singleTwits(Auth.token, id)
-            //console.log(twitData)
+            console.log(twitData)
             //if(!twitData) return console.log("failed to fetch remote data")
             setValues(v=>({...v, Auth, twit:twitData.data}))
         }
         boots();
-    }, [])
+    }, [id])
 
     const handleTwits =async () =>{
         setValues({...values, loading:true})
@@ -69,13 +69,13 @@ export default function single() {
         
     }
 
-    const handleLikes = async () =>{
+    // const handleLikes = async () =>{
 
-    }
+    // }
 
-    const handleComment = async () =>{
+    // const handleComment = async () =>{
 
-    }
+    // }
 
 
     const HandleSignOut = async ()=>{
@@ -148,7 +148,7 @@ export default function single() {
                 <div className="dropdown navbar-user-dropdown">
                     <button className="btn btn-secondary dropdown-toggle btn-circle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a className="dropdown-item" onClick={HandleSignOut}>Sign out </a>
+                    <span className="dropdown-item" onClick={HandleSignOut}>Sign out </span>
                     </div>
                 </div>
                 {/* END: Navbar User menu */}
@@ -174,25 +174,25 @@ export default function single() {
                     <div className="col-6">
                         <ul>
                         <li className="profile-stats-item-active">
-                            <a>
+                            <a href>
                             <span className="profile-stats-item profile-stats-item-label">Tweets</span>
                             <span className="profile-stats-item profile-stats-item-number">51</span>
                             </a>
                         </li>
                         <li>
-                            <a>
+                            <a href>
                             <span className="profile-stats-item profile-stats-item-label">Following</span>
                             <span className="profile-stats-item profile-stats-item-number">420</span>
                             </a>
                         </li>
                         <li>
-                            <a>
+                            <a href>
                             <span className="profile-stats-item profile-stats-item-label">Followers</span>
                             <span className="profile-stats-item profile-stats-item-number">583</span>
                             </a>
                         </li>
                         <li>
-                            <a>
+                            <a href>
                             <span className="profile-stats-item profile-stats-item-label">Likes</span>
                             <span className="profile-stats-item profile-stats-item-number">241</span>
                             </a>
@@ -251,7 +251,7 @@ export default function single() {
                                     </span>      
                                 </div>
                                 <Link to="/">
-                                    <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt />
+                                    <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="demo" />
                                 </Link>
                                 <div className="tweet-text">
                                     <p className lang="es" data-aria-label-part={0}>
@@ -278,25 +278,25 @@ export default function single() {
                                                 <span className="username">@{data.user.name}</span>
                                                 <span className="tweet-time">  - {date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()+ '-'+date.getUTCHours()+ '-'+date.getMinutes()+ '-'+date.getUTCSeconds()}</span>
                                             </div>
-                                            <a>
-                                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt />
+                                            <a href>
+                                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="demo" />
                                             </a>
                                             <div className="tweet-text">
                                                 <p className lang="es" data-aria-label-part={0}>
                                                     {
                                                         data.text
                                                     } 
-                                                    <a href className="twitter-hashtag" dir="ltr" />
+ 
                                                 </p>
                                             </div>
                                             <div className="tweet-footer">
-                                                <a className="tweet-footer-btn">
+                                                <a className="tweet-footer-btn" href>
                                                     <Link to={`twits/${data.id}`}>
                                                         <i className="octicon octicon-comment" aria-hidden="true" /><span> {data.comment.length}</span>
                                                     </Link>
                                                     
                                                 </a>
-                                                <a className="tweet-footer-btn">
+                                                <a className="tweet-footer-btn" href>
                                                     <i className="octicon octicon-heart" aria-hidden="true" /><span> {data.likes.length}</span>
                                                 </a>
                                             </div>
@@ -323,7 +323,7 @@ export default function single() {
                         <ol className="tweet-list">
                             <li className="tweet-card">
                                 <div className="tweet-content">
-                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt />
+                                <img className="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="demo" />
                                 <div className="tweet-header">
                                 <span className="fullname">
                                     <strong>Jon Vadillo</strong>
